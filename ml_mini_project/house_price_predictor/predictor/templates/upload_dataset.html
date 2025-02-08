@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            font-size: 2.5rem;
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .info-section {
+            margin-top: 40px;
+        }
+        .info-section h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .info-section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .info-section ul li {
+            margin-bottom: 10px;
+        }
+        .info-section ul li strong {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="title">House Price Prediction and Model Evaluation</h1>
+   
+</div>
+<div class="container mt-4 d-flex justify-content-center">
+    <form method="POST" enctype="multipart/form-data" class="w-50">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="csv_file">Choose CSV File</label>
+            <input type="file" class="form-control-file" name="csv_file" required>
+        </div>
+
+        <div class="form-group">
+            <label for="algorithm">Select Algorithm</label>
+            <select name="algorithm" class="form-control" required>
+                <option value="linear_regression">Linear Regression</option>
+                <option value="logistic_regression">Logistic Regression</option>
+                <option value="polynomial_regression">Polynomial Regression</option>
+                <option value="decision_tree">Decision Tree</option>
+                <option value="random_forest">Random Forest</option>
+                <option value="knn">K-Nearest Neighbors</option>
+                <option value="naive_bayes">Naive Bayes</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Upload and Run</button>
+    </form>
+</div>
+</div>
+    
+    {% if summary %}
+        <h2 class="mt-4">Data Summary</h2>
+        <div class="table-responsive">
+            {{ summary|safe }}
+        </div>
+    {% endif %}
+
+    {% if model_type %}
+        <h2 class="mt-4">Model: {{ model_type }}</h2>
+        <div><strong>Evaluation:</strong> {{ evaluation | linebreaksbr | safe }}</div>
+    {% endif %}
+
+    {% if error %}
+        <div class="alert alert-danger mt-4">
+            <strong>Error:</strong> {{ error }}
+        </div>
+    {% endif %}
+</div>
